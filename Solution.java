@@ -1,59 +1,39 @@
-package day01;
-
+package com.had.Leetcode.TwoSum01;
 
 /**
- * Given a sorted array nums, remove the duplicates in-place such that each element appear only once and return the new length.
-
-Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
-
-Example 1:
-
-Given nums = [1,1,2],
-
-Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively.
-
-It doesn't matter what you leave beyond the returned length.
-Example 2:
-
-Given nums = [0,0,1,1,1,2,2,3,3,4],
-
-Your function should return length = 5, with the first five elements of nums being modified to 0, 1, 2, 3, and 4 respectively.
-
-It doesn't matter what values are set beyond the returned length.
-Clarification:
-
-Confused why the returned value is an integer but your answer is an array?
-
-Note that the input array is passed in by reference, which means modification to the input array will be known to the caller as well.
-
-Internally you can think of this:
-
-// nums is passed in by reference. (i.e., without making a copy)
-int len = removeDuplicates(nums);
-
-// any modification to nums in your function would be known by the caller.
-// using the length returned by your function, it prints the first len elements.
-for (int i = 0; i < len; i++) {
-    print(nums[i]);
-}
-
-来源：力扣（LeetCode）
-链接：https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array
-著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
- * @author houaod
- *
+ * 将两个有序链表合并为一个新的有序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。 
+ * <p>
+ * 示例：
+ * <p>
+ * 输入：1->2->4, 1->3->4
+ * 输出：1->1->2->3->4->4
  */
-class Solution {
-    public int removeDuplicates(int[] nums) {
-        if(nums == null || nums.length == 0) {
-            return 0;
+public class Solution {
+    public class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int x) {
+            val = x;
         }
-        int count = 1;
-        for(int i=1;i<nums.length;i++) {
-            if(nums[i-1] !=nums[i]) {
-                nums[count++] = nums[i];
-            }
+    }
+
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+
+        if(l1 == null) {
+            return l2;
         }
-        return count;
+        if(l2 == null) {
+            return l1;
+        }
+
+        if(l1.val < l2.val) {
+            l1.next = mergeTwoLists(l1.next, l2);
+            return l1;
+        } else {
+            l2.next = mergeTwoLists(l1, l2.next);
+            return l2;
+        }
     }
 }
+
